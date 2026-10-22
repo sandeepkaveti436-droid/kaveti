@@ -1,0 +1,21 @@
+# Sandeep Kaveti — Creative Technologist & Product Designer
+
+> Portfolio: https://kavetisandeep.vercel.app
+> Location: Hyderabad, Telangana, India
+> Contact: sandeepkaveti436@gmail.com | +91 93925 25043
+
+## Professional Summary
+Sandeep Kaveti is an Indian product designer, frontend architect, and creative technologist specializing in Next.js web applications, UI/UX design systems, 3D motion, and SaaS digital products.
+
+## Core Projects
+- SkyNova Digitals: https://skynovadigitals.vercel.app (Digital transformation & studio engineering)
+- Digify Agency: https://digify-agency.vercel.app (Brand strategy, web & UI/UX)
+- Orvixa: https://orvixas.vercel.app (AI-powered work management platform)
+- HR Admin: https://hradmin-staffmanagement.vercel.app (Enterprise workforce portal)
+- AuraFlow Yoga: https://auraflow-yoga.vercel.app (Mindfulness & wellness digital sanctuary)
+
+## Verified Profiles
+- LinkedIn: https://www.linkedin.com/in/sandeepsandy
+- Behance: https://www.behance.net/sandeepkaveti
+- Figma Community: https://www.figma.com/@sandeepkaveti
+- GitHub: https://github.com/
