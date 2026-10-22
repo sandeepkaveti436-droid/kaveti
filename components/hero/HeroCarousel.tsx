@@ -10,6 +10,7 @@ import {
   CARD_GAP,
   REST_DURATION,
 } from "@/data/projects";
+import HeroCursor from "./HeroCursor";
 import HeroHeader from "./HeroHeader";
 import HeroTitle from "./HeroTitle";
 import BottomBar from "../navigation/BottomBar";
@@ -205,7 +206,6 @@ export default function HeroCarousel() {
 
   const activeProject = PROJECTS[currentIndex];
 
-  // CLICKING THE HERO IMAGE OPENS THAT SPECIFIC PROJECT'S CASE STUDY
   const handleSlideClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isAnimatingRef.current) return;
@@ -216,10 +216,13 @@ export default function HeroCarousel() {
     <main
       className={`${inter.className} relative w-full h-screen bg-white p-3 sm:p-5 md:p-3 flex items-center justify-center box-border overflow-hidden select-none`}
     >
-      {/* Centered Hero Viewport */}
+      {/* ===================== 1. MOUNT CUSTOM CURSOR ===================== */}
+      <HeroCursor containerRef={viewportRef} disabled={menuOpen} />
+
+      {/* ===================== 2. HERO VIEWPORT (with hero-cursor-zone) ===================== */}
       <div
         ref={viewportRef}
-        className="relative w-full h-full max-w-[1920px] rounded-[24px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden shadow-2xl bg-white"
+        className="hero-cursor-zone relative w-full h-full max-w-[1920px] rounded-[24px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden shadow-2xl bg-white"
       >
         {/* Zoom Wrapper */}
         <div
@@ -227,7 +230,7 @@ export default function HeroCarousel() {
           className="relative w-full h-full will-change-transform"
           style={{ transformOrigin: "50% 50%" }}
         >
-          {/* Filmstrip Track (Clicking image navigates to the case study) */}
+          {/* Filmstrip Track */}
           <div
             ref={trackRef}
             className="absolute top-0 left-0 h-full flex will-change-transform cursor-pointer"
@@ -259,7 +262,7 @@ export default function HeroCarousel() {
         {/* Top Header */}
         <HeroHeader headerRef={headerRef} />
 
-        {/* Editorial Project Title (Clicking title also opens case study) */}
+        {/* Editorial Project Title */}
         <div onClick={handleSlideClick} className="cursor-pointer">
           <HeroTitle
             titleRef={titleRef}
@@ -274,11 +277,11 @@ export default function HeroCarousel() {
           totalProjects={N}
           activeIcon={activeProject.icon}
           isAnimating={isAnimating}
-          onNext={handleNext} // The next button on the bottom bar advances to the next slide
+          onNext={handleNext}
           onOpenMenu={() => setMenuOpen(true)}
           counterRef={counterRef}
           label="View Case Study / Project"
-          labelHref={`/work/${activeProject.id}`} // Links directly to the current project's case study
+          labelHref={`/work/${activeProject.id}`}
         />
       </div>
 
