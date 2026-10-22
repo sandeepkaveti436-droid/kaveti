@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 
 // 1. Optimize Inter font
 const inter = Inter({
@@ -130,7 +133,8 @@ export default function RootLayout({
             __html: JSON.stringify(jsonLd),
           }}
         />
-
+        <SpeedInsights />
+        <Analytics />
         {children}
       </body>
     </html>
