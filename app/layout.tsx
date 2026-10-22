@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // 1. Optimize Inter font
@@ -132,6 +133,7 @@ export default function RootLayout({
         />
 
         {children}
+        <Analytics />
       </body>
     </html>
   );
