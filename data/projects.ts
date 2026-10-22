@@ -1,57 +1,79 @@
-import { Project } from '@/types/carousel';
+export type ProjectIconType = 'tech' | 'youtube' | 'ai' | 'watch' | 'avatr' | 'gaudi';
+
+export interface Project {
+  id: number;
+  line1: string;
+  line2: string;
+  category: string;
+  image: string;
+  liveUrl: string;
+  icon: ProjectIconType;
+}
+
+export const CARD_GAP = 56;
+export const REST_DURATION = 5500;
 
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    line1: 'AVATR - Vision',
-    line2: 'Xpectra',
-    category: 'Autonomous Luxury Experience',
-    image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2600&auto=format&fit=crop',
-    icon: 'avatr'
+    line1: "SkyNova",
+    line2: "Digitals",
+    category: "Digital Transformation & Product Studio",
+    liveUrl: "https://skynovadigitals.vercel.app/",
+    // Live full-HD automated screenshot from your Vercel deployment
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fskynovadigitals.vercel.app%2F?w=1920&h=1080",
+    icon: "tech",
   },
   {
     id: 2,
-    line1: 'YouTube',
-    line2: 'Shopping',
-    category: 'Spatial Design & 3D Motion',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2600&auto=format&fit=crop',
-    icon: 'youtube'
+    line1: "Digify",
+    line2: "Agency",
+    category: "Brand Strategy, Web & UI/UX",
+    liveUrl: "https://digify-agency.vercel.app/",
+    // Live full-HD automated screenshot from your Vercel deployment
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fdigify-agency.vercel.app%2F?w=1920&h=1080",
+    icon: "youtube",
   },
   {
     id: 3,
-    line1: 'El Capricho de',
-    line2: 'Gaudí',
-    category: 'Architecture & Visual Identity',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2600&auto=format&fit=crop',
-    icon: 'gaudi'
+    line1: "Orvixa",
+    line2: "AI Platform",
+    category: "AI Powered Work Management Platform",
+    liveUrl: "https://orvixas.vercel.app/",
+    // Live full-HD automated screenshot from your Vercel deployment
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Forvixas.vercel.app%2F?w=1920&h=1080",
+    icon: "ai",
   },
   {
     id: 4,
-    line1: 'Fly',
-    line2: 'Society',
-    category: 'Wearable Platform & Ecosystem',
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=2600&auto=format&fit=crop',
-    icon: 'watch'
+    line1: "HR Admin",
+    line2: "Intelligence",
+    category: "Staff & Workforce Enterprise Management",
+    liveUrl: "https://hradmin-staffmanagement.vercel.app/",
+    // Live full-HD automated screenshot from your Vercel deployment
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fhradmin-staffmanagement.vercel.app%2F?w=1920&h=1080",
+    icon: "watch",
   },
   {
     id: 5,
-    line1: 'Infinix',
-    line2: 'Next Generation',
-    category: 'Digital Product Design',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2600&auto=format&fit=crop',
-    icon: 'tech'
+    line1: "Sandeep Kaveti",
+    line2: "Personal Brand",
+    category: "Creative Direction & Portfolio Experience",
+    liveUrl: "https://kavetisandeep.vercel.app/",
+    // Live full-HD automated screenshot from your Vercel deployment
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fkavetisandeep.vercel.app%2F?w=1920&h=1080",
+    icon: "avatr",
   },
   {
     id: 6,
-    line1: 'Neara',
-    line2: 'Platform AI',
-    category: 'Digital Twin Simulation',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2600&auto=format&fit=crop',
-    icon: 'ai'
-  }
+    line1: "AuraFlow",
+    line2: "Yoga & Wellness",
+    category: "Mindfulness & Holistic Yoga Studio",
+    liveUrl: "https://auraflow-yoga.vercel.app/",
+    // Live full-HD automated screenshot from your Vercel deployment
+    image: "https://s0.wp.com/mshots/v1/https%3A%2F%2Fauraflow-yoga.vercel.app%2F?w=1920&h=1080",
+    icon: "gaudi",
+  },
 ];
 
-// Buffer for seamless, infinite forward-and-backward filmstrip continuity
 export const EXTENDED_PROJECTS = [...PROJECTS, ...PROJECTS, ...PROJECTS];
-export const CARD_GAP = 56;
-export const REST_DURATION = 5500;

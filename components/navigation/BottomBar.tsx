@@ -16,7 +16,6 @@ interface BottomBarProps {
   label?: string;
   labelHref?: string;
   fixed?: boolean;
-  theme?: "light" | "dark";
 }
 
 export default function BottomBar({
@@ -29,25 +28,20 @@ export default function BottomBar({
   counterRef,
   label = "View Case Study / Project",
   labelHref,
-  fixed = false,
-  theme = "dark",
+  fixed = true,
 }: BottomBarProps) {
-  const isLight = theme === "light";
+  // Dynamically links to that particular project's case study (/work/1, /work/2, etc.)
+  const targetHref = labelHref || `/work/${currentIndex + 1}`;
 
   return (
     <div
       className={`${
         fixed ? "fixed" : "absolute"
-      } bottom-6 sm:bottom-8 inset-x-0 z-50 px-6 sm:px-10 flex items-center justify-center pointer-events-none`}
+      } bottom-4 sm:bottom-6 inset-x-0 z-40 px-4 flex items-center justify-center pointer-events-none`}
     >
-      {/* Center Frosted Glass Island Dock (Exact Center) */}
-      <div
-        className={`pointer-events-auto flex items-center justify-between w-full max-w-[380px] sm:max-w-[320px] px-2.5 py-2 rounded-[20px] backdrop-blur-2xl transition-all duration-300 ${
-          isLight
-            ? "bg-white/80 hover:bg-white/90 border border-black/10 shadow-[0_12px_40px_rgba(0,0,0,0.12)]"
-            : "bg-white/20 hover:bg-white/25 border border-white/30 shadow-[0_12px_40px_rgba(0,0,0,0.25)]"
-        }`}
-      >
+      {/* ===================== MAIN BOTTOM BAR (NO LOGO SHOWN HERE) ===================== */}
+      <div className="pointer-events-auto flex items-center justify-between w-[290px] sm:w-[330px] h-[52px] p-1.5 rounded-[18px] bg-[#e6e6e6]/95 hover:bg-[#e6e6e6] border border-black/5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] text-[#1d1d1d] transition-all duration-300">
+        {/* Left: Project Icon (Next Slide) - No Logo */}
         {onNext && activeIcon ? (
           <button
             type="button"
@@ -56,7 +50,7 @@ export default function BottomBar({
               onNext();
             }}
             disabled={isAnimating}
-            className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] bg-[#121214] text-white hover:scale-105 active:scale-95 transition-transform duration-200 shadow-md disabled:opacity-40 shrink-0"
+            className="w-10 h-10 rounded-[12px] bg-[#121214] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-transform duration-200 shadow-xs disabled:opacity-40 shrink-0"
             aria-label="Next Project"
           >
             <ProjectIcon icon={activeIcon} />
@@ -64,12 +58,12 @@ export default function BottomBar({
         ) : (
           <Link
             href="/"
-            className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] bg-[#121214] text-white hover:scale-105 active:scale-95 transition-transform duration-200 shadow-md shrink-0"
+            className="w-10 h-10 rounded-[12px] bg-[#121214] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-transform duration-200 shadow-xs shrink-0"
             aria-label="Home"
           >
             <svg
-              width="18"
-              height="18"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -81,66 +75,36 @@ export default function BottomBar({
           </Link>
         )}
 
-        {/* Center Label */}
-        {labelHref ? (
-          <Link
-            href={labelHref}
-            className={`text-[13px] sm:text-[14px] font-semibold px-4 py-2 select-none tracking-tight text-center transition-colors ${
-              isLight
-                ? "text-black hover:text-neutral-700"
-                : "text-white hover:text-neutral-200"
-            }`}
-          >
-            {label}
-          </Link>
-        ) : (
-          <span
-            className={`text-[13px] sm:text-[14px] font-semibold px-4 select-none tracking-tight text-center ${
-              isLight ? "text-black" : "text-white"
-            }`}
-          >
-            {label}
-          </span>
-        )}
+        {/* Center: Dynamic Case Study Link */}
+        <Link
+          href={targetHref}
+          className="flex-1 text-center text-[12.5px] font-medium text-[#1d1d1d] px-2 select-none tracking-tight transition-opacity hover:opacity-70 truncate"
+        >
+          {label}
+        </Link>
 
-        {/* Right Menu Button */}
+        {/* Right: Dual-Bar Menu Toggle Button */}
         <button
           type="button"
           onClick={(e) => {
             e.stopPropagation();
             onOpenMenu();
           }}
-          className={`flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] hover:scale-105 active:scale-95 transition-transform duration-200 shadow-sm shrink-0 ${
-            isLight
-              ? "bg-neutral-100 hover:bg-neutral-200 text-black border border-neutral-200"
-              : "bg-white hover:bg-neutral-100 text-[#121214]"
-          }`}
-          aria-label="Toggle Project Menu"
+          className="w-10 h-10 rounded-[12px] bg-white text-[#1d1d1d] hover:scale-105 active:scale-95 transition-transform duration-200 shadow-xs flex items-center justify-center shrink-0 border border-black/5"
+          aria-label="Open Menu"
         >
           <div className="flex flex-col gap-[3.5px] items-center justify-center">
-            <span
-              className={`w-[14px] h-[1.8px] rounded-full ${
-                isLight ? "bg-black" : "bg-[#121214]"
-              }`}
-            />
-            <span
-              className={`w-[14px] h-[1.8px] rounded-full ${
-                isLight ? "bg-black" : "bg-[#121214]"
-              }`}
-            />
+            <span className="w-4 h-[1.8px] bg-[#1d1d1d] rounded-full" />
+            <span className="w-4 h-[1.8px] bg-[#1d1d1d] rounded-full" />
           </div>
         </button>
       </div>
 
-      {/* Number 1 / 6 Pinned to the Far Right Corner */}
+      {/* Counter (Hero only on desktop) */}
       {totalProjects !== undefined && (
         <div
           ref={counterRef}
-          className={`absolute right-6 sm:right-10 pointer-events-auto flex items-center justify-center px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-[10px] backdrop-blur-md text-[12px] sm:text-[13px] font-mono tracking-wider shadow-lg will-change-transform ${
-            isLight
-              ? "bg-white/90 border border-black/10 text-black"
-              : "bg-black/35 border border-white/10 text-white"
-          }`}
+          className="hidden sm:flex absolute right-6 sm:right-10 pointer-events-auto items-center justify-center px-4 py-2 rounded-[50px] bg-black/60 backdrop-blur-md border border-white/15 text-white text-[12px] font-mono tracking-wider shadow-lg will-change-transform"
         >
           0{currentIndex + 1} / 0{totalProjects}
         </div>

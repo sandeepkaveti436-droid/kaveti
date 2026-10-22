@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { Inter } from "next/font/google";
 import {
@@ -14,7 +15,6 @@ import HeroTitle from "./HeroTitle";
 import BottomBar from "../navigation/BottomBar";
 import MenuDrawer from "../navigation/MenuDrawer";
 
-// Initialize Inter font
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -23,12 +23,12 @@ const inter = Inter({
 const N = PROJECTS.length;
 
 export default function HeroCarousel() {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [cardWidth, setCardWidth] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Virtual index starts at middle set (N = 6)
   const virtualIndexRef = useRef(N);
   const isAnimatingRef = useRef(false);
 
@@ -40,11 +40,11 @@ export default function HeroCarousel() {
   const counterRef = useRef<HTMLDivElement>(null);
   const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // Responsive card measurement
+  // Resize measurement
   useEffect(() => {
     const handleResize = () => {
       if (viewportRef.current) {
-        const w = viewportRef.current.offsetWidth;
+        const w = viewportRef.current.offsetWidth || window.innerWidth;
         setCardWidth(w);
         if (trackRef.current && !isAnimatingRef.current) {
           gsap.set(trackRef.current, {
@@ -76,7 +76,6 @@ export default function HeroCarousel() {
 
     const tl = gsap.timeline({
       onComplete: () => {
-        // Silent reset: keeps virtualIndex in middle set without visual disruption
         let normalized = targetVirtual;
         if (targetVirtual >= N * 2) {
           normalized = targetVirtual - N;
@@ -105,7 +104,7 @@ export default function HeroCarousel() {
       0,
     );
 
-    // 2. Slow deep Zoom-Out (scale 1.0 -> 0.48)
+    // 2. Slow deep Zoom-Out
     tl.to(
       zoomWrapperRef.current,
       {
@@ -127,7 +126,6 @@ export default function HeroCarousel() {
       0.85,
     );
 
-    // Synchronize content mid-flight
     tl.call(
       () => {
         setCurrentIndex(nextProjectIndex);
@@ -170,7 +168,7 @@ export default function HeroCarousel() {
     goToSlide("prev");
   }, [goToSlide]);
 
-  // Unbreakable infinite autoplay loop
+  // Autoplay loop
   useEffect(() => {
     if (autoPlayTimer.current) clearTimeout(autoPlayTimer.current);
 
@@ -207,6 +205,13 @@ export default function HeroCarousel() {
 
   const activeProject = PROJECTS[currentIndex];
 
+  // CLICKING THE HERO IMAGE OPENS THAT SPECIFIC PROJECT'S CASE STUDY
+  const handleSlideClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isAnimatingRef.current) return;
+    router.push(`/work/${activeProject.id}`);
+  };
+
   return (
     <main
       className={`${inter.className} relative w-full h-screen bg-white p-3 sm:p-5 md:p-3 flex items-center justify-center box-border overflow-hidden select-none`}
@@ -222,30 +227,30 @@ export default function HeroCarousel() {
           className="relative w-full h-full will-change-transform"
           style={{ transformOrigin: "50% 50%" }}
         >
-          {/* Filmstrip Track */}
+          {/* Filmstrip Track (Clicking image navigates to the case study) */}
           <div
             ref={trackRef}
-            className="absolute top-0 left-0 h-full flex will-change-transform"
+            className="absolute top-0 left-0 h-full flex will-change-transform cursor-pointer"
             style={{
               gap: `${CARD_GAP}px`,
-              cursor: isAnimating ? "default" : "pointer",
             }}
-            onClick={handleNext}
+            onClick={handleSlideClick}
           >
             {EXTENDED_PROJECTS.map((proj, idx) => (
               <div
                 key={`${proj.id}-${idx}`}
-                className="relative h-full flex-shrink-0 overflow-hidden rounded-[24px] sm:rounded-[20px] md:rounded-[24px] bg-black shadow-2xl"
+                className="relative h-full flex-shrink-0 overflow-hidden rounded-[24px] sm:rounded-[20px] md:rounded-[24px] bg-neutral-900 shadow-2xl"
                 style={{
                   width: cardWidth > 0 ? `${cardWidth}px` : "100vw",
                 }}
               >
-                <div
-                  className="absolute inset-0 w-full h-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${proj.image})` }}
-                >
-                  <div className="absolute inset-0 bg-black/15 pointer-events-none" />
-                </div>
+                <img
+                  src={proj.image}
+                  alt={`${proj.line1} ${proj.line2}`}
+                  className="w-full h-full object-cover object-top"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-black/25 pointer-events-none" />
               </div>
             ))}
           </div>
@@ -254,12 +259,14 @@ export default function HeroCarousel() {
         {/* Top Header */}
         <HeroHeader headerRef={headerRef} />
 
-        {/* Editorial Project Title */}
-        <HeroTitle
-          titleRef={titleRef}
-          line1={activeProject.line1}
-          line2={activeProject.line2}
-        />
+        {/* Editorial Project Title (Clicking title also opens case study) */}
+        <div onClick={handleSlideClick} className="cursor-pointer">
+          <HeroTitle
+            titleRef={titleRef}
+            line1={activeProject.line1}
+            line2={activeProject.line2}
+          />
+        </div>
 
         {/* Floating Bottom Navigation Bar */}
         <BottomBar
@@ -267,9 +274,11 @@ export default function HeroCarousel() {
           totalProjects={N}
           activeIcon={activeProject.icon}
           isAnimating={isAnimating}
-          onNext={handleNext}
+          onNext={handleNext} // The next button on the bottom bar advances to the next slide
           onOpenMenu={() => setMenuOpen(true)}
           counterRef={counterRef}
+          label="View Case Study / Project"
+          labelHref={`/work/${activeProject.id}`} // Links directly to the current project's case study
         />
       </div>
 

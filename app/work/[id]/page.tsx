@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import Footer from "@/components/navigation/Footer";
+import { LiquidButton } from "@/components/animate-ui/buttons/liquid";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -361,10 +362,11 @@ export default async function CaseStudyPage({
         </div>
       </header>
 
-      {/* ===================== TOP HERO ===================== */}
-      <section className="max-w-8xl mx-auto px-6 pt-16 pb-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-neutral-200">
-          <div className="max-w-2xl">
+      {/* ===================== TOP HERO (Mobile Centered + Liquid Button with Arrow) ===================== */}
+      <section className="max-w-8xl mx-auto px-6 pt-6 pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between items-center md:items-end gap-8 pb-10 border-b border-neutral-200 text-center md:text-left">
+          {/* Left Side: Category, Title & Description */}
+          <div className="max-w-2xl flex flex-col items-center md:items-start">
             <span className="text-xs uppercase tracking-[0.25em] text-neutral-400 block mb-3 font-medium">
               {project.category}
             </span>
@@ -374,66 +376,69 @@ export default async function CaseStudyPage({
                 {project.subtitle}
               </span>
             </h1>
-            <p className="text-[16px] sm:text-[18px] text-neutral-600 font-light mt-6 leading-relaxed">
+            <p className="text-[16px] sm:text-[18px] text-neutral-600 font-light mt-6 leading-relaxed max-w-xl md:max-w-none">
               {project.description}
             </p>
           </div>
 
-          <div className="shrink-0 mb-2">
+          {/* Right Side: Liquid Button with Arrow */}
+          <div className="shrink-0 mb-2 w-full md:w-auto flex justify-center md:justify-end">
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-black text-white hover:bg-neutral-800 transition-all shadow-md text-sm font-medium tracking-tight"
+              className="shrink-0 inline-block"
             >
-              <span>View Live Website</span>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-              >
-                <line x1="7" y1="17" x2="17" y2="7" />
-                <polyline points="7 7 17 7 17 17" />
-              </svg>
+              <LiquidButton className="px-6 py-3 rounded-[12px] bg-white text-neutral-900 text-sm font-medium tracking-tight border border-neutral-300/80 shadow-sm hover:bg-neutral-50 hover:shadow transition-all flex items-center gap-2.5">
+                <span>View Live Website</span>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </LiquidButton>
             </a>
           </div>
         </div>
 
-        {/* Project Meta Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 text-xs">
+        {/* Project Meta Bar (Centered on Mobile) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 text-xs text-center sm:text-left">
           <div>
-            <span className="text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
+            <span className="text-[14px] sm:text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
               Client
             </span>
-            <span className="text-[16px] font-medium text-neutral-900">
+            <span className="text-[15px] sm:text-[16px] font-medium text-neutral-900">
               {project.client}
             </span>
           </div>
           <div>
-            <span className="text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
+            <span className="text-[14px] sm:text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
               Role
             </span>
-            <span className="text-[16px] font-medium text-neutral-900">
+            <span className="text-[15px] sm:text-[16px] font-medium text-neutral-900">
               {project.role}
             </span>
           </div>
           <div>
-            <span className="text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
+            <span className="text-[14px] sm:text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
               Timeline
             </span>
-            <span className="text-[16px] font-medium text-neutral-900">
+            <span className="text-[15px] sm:text-[16px] font-medium text-neutral-900">
               {project.year}
             </span>
           </div>
           <div>
-            <span className="text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
+            <span className="text-[14px] sm:text-[16px] text-neutral-400 block uppercase tracking-wider mb-1 font-medium">
               Service
             </span>
-            <span className="text-[16px] font-medium text-neutral-900">
+            <span className="text-[15px] sm:text-[16px] font-medium text-neutral-900">
               {project.category}
             </span>
           </div>
@@ -471,8 +476,8 @@ export default async function CaseStudyPage({
       </section>
 
       {/* ===================== VIDEOS SECTION ===================== */}
-      <section className="max-w-8xl mx-auto px-6 py-16">
-        <div className="mb-8">
+      <section className="max-w-8xl mx-auto px-6 py-4">
+        <div className="mb-8 text-center md:text-left">
           <span className="text-[14px] uppercase tracking-[0.25em] text-neutral-400 block mb-2 font-medium">
             Live Prototypes
           </span>
@@ -507,7 +512,7 @@ export default async function CaseStudyPage({
                 </video>
               </div>
             </div>
-            <span className="text-xs text-neutral-400 pl-2 font-medium">
+            <span className="text-xs text-neutral-400 pl-2 font-medium text-center md:text-left">
               Desktop Viewport (1920 × 1080)
             </span>
           </div>
@@ -530,7 +535,7 @@ export default async function CaseStudyPage({
                 </video>
               </div>
             </div>
-            <span className="text-xs text-neutral-400 font-medium">
+            <span className="text-xs text-neutral-400 font-medium text-center">
               Mobile Viewport (390 × 844)
             </span>
           </div>
@@ -538,8 +543,8 @@ export default async function CaseStudyPage({
       </section>
 
       {/* ===================== PROCESS SECTION ===================== */}
-      <section className="max-w-8xl mx-auto px-6 py-16 border-t border-neutral-200">
-        <div className="mb-12">
+      <section className="max-w-8xl mx-auto px-6 py-6 border-t border-neutral-200">
+        <div className="mb-12 text-center md:text-left">
           <span className="text-[14px] uppercase tracking-[0.25em] text-neutral-400 block mb-2 font-medium">
             Execution Strategy
           </span>
