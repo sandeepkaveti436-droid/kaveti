@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from '@vercel/speed-insights/next';
-
 
 // 1. Optimize Inter font
 const inter = Inter({
@@ -34,6 +32,11 @@ export const metadata: Metadata = {
     { name: "Sandeep Kaveti", url: "https://kavetisandeep.vercel.app" },
   ],
   creator: "Sandeep Kaveti",
+  icons: {
+    icon: "/icon",
+    shortcut: "/icon",
+    apple: "/icon",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -127,17 +130,19 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-white text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white`}
       >
-        {/* Injected Schema Markup for Search Engines and AI Overviews */}
+        {/* Search Engine and AI JSON-LD Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(jsonLd),
           }}
         />
-        <SpeedInsights />
-        <Analytics />
+
         {children}
+
+        {/* Vercel Speed & Performance Insights */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
